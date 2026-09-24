@@ -13,7 +13,7 @@ straight to your Apple Watch through [Workouter](https://workouter.co).
 ## Install
 
 ```
-/plugin marketplace add TomBarta/workouter-claude-plugin
+/plugin marketplace add workouter-co/agent-plugins
 /plugin install workouter@workouter
 ```
 
@@ -27,7 +27,7 @@ the commands into OpenClaw skills. Sign-in is a separate step, because
 `openclaw mcp login` only works with servers in OpenClaw's own config:
 
 ```
-openclaw plugins install workouter --marketplace TomBarta/workouter-claude-plugin
+openclaw plugins install workouter --marketplace workouter-co/agent-plugins
 openclaw mcp add workouter --url https://workouter.co/api/mcp --transport streamable-http --auth oauth
 openclaw mcp login workouter
 ```
