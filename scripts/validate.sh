@@ -14,12 +14,14 @@ check() {
 check "WORKO-224: marketplace validates" claude plugin validate .
 check "WORKO-224: plugin validates" claude plugin validate "$PLUGIN"
 
-check "WORKO-224: .mcp.json declares only the production HTTP server" python3 - "$PLUGIN/.mcp.json" <<'PY'
+# WORKO-227: "auth": "oauth" is for OpenClaw, which only runs OAuth for
+# servers that declare it. Claude Code ignores the key.
+check "WORKO-224/WORKO-227: .mcp.json declares only the production HTTP server, with OAuth" python3 - "$PLUGIN/.mcp.json" <<'PY'
 import json, sys
 servers = json.load(open(sys.argv[1]))["mcpServers"]
 assert list(servers) == ["workouter"], servers
 s = servers["workouter"]
-assert s == {"type": "http", "url": "https://workouter.co/api/mcp"}, s
+assert s == {"type": "http", "url": "https://workouter.co/api/mcp", "auth": "oauth"}, s
 PY
 
 has_frontmatter() { # file, key...

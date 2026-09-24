@@ -20,6 +20,23 @@ straight to your Apple Watch through [Workouter](https://workouter.co).
 Then run `/mcp`, pick **workouter**, and sign in. A browser window opens for
 Workouter's OAuth consent. There is no API key to copy.
 
+## OpenClaw
+
+OpenClaw installs this plugin as a Claude bundle, and turns the skill and
+the commands into OpenClaw skills. Sign-in is a separate step, because
+`openclaw mcp login` only works with servers in OpenClaw's own config:
+
+```
+openclaw plugins install workouter --marketplace TomBarta/workouter-claude-plugin
+openclaw mcp add workouter --url https://workouter.co/api/mcp --transport streamable-http --auth oauth
+openclaw mcp login workouter
+```
+
+`login` opens Workouter's consent page and picks up the loopback callback
+automatically. To see the inline workout card, turn on OpenClaw's MCP Apps
+host bridge (`openclaw config set mcp.apps.enabled true --strict-json`), then
+restart the gateway.
+
 ## What you get
 
 | | |
