@@ -1,0 +1,13 @@
+{
+  "name": "workouter",
+  "version": "0.1.0",
+  "description": "Design structured workouts and send them to your Apple Watch through Workouter.",
+  "author": {
+    "name": "Workouter",
+    "email": "developers@workouter.co",
+    "url": "https://workouter.co"
+  },
+  "homepage": "https://workouter.co",
+  "repository": "https://github.com/TomBarta/workouter-claude-plugin",
+  "keywords": ["workout", "fitness", "apple-watch", "workoutkit", "mcp"]
+}

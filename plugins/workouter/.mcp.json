@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "workouter": {
+      "type": "http",
+      "url": "https://workouter.co/api/mcp"
+    }
+  }
+}
