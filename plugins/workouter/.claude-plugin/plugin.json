@@ -8,6 +8,6 @@
     "url": "https://workouter.co"
   },
   "homepage": "https://workouter.co",
-  "repository": "https://github.com/TomBarta/workouter-claude-plugin",
+  "repository": "https://github.com/workouter-co/agent-plugins",
   "keywords": ["workout", "fitness", "apple-watch", "workoutkit", "mcp"]
 }
