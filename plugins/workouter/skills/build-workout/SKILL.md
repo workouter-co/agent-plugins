@@ -122,18 +122,18 @@ another object.
 
 Report the result based on `delivery`:
 
-- `pushed`: it was sent to the watch.
+- `pushed`: delivery was requested and APNs accepted the push; Watch receipt is unconfirmed. If it is missing, inspect `get_workout_delivery_status` with the same `workout_id` and offer the returned `handoff_url` or QR. Missing or stale observations are unknown. Do not create a duplicate to retry delivery.
 - `handoff`: give the user `handoff_url` to open on their iPhone.
 - `not_delivered`: it was saved but the file couldn't be built. Say so
   plainly.
 
-Mention the remaining `quota`.
+Mention the remaining `quota` when it is available. A `workout_saved` error still identifies an existing workout: inspect that ID rather than creating it again.
 
 ## Errors
 
 - `invalid_workout`: read `issues`, fix the payload, and retry **once**. If it
   fails again, show the user the issues.
 - `workout_limit_exceeded`: the weekly limit was reached. Stop.
-- `subscription_required`: relay the upgrade link. Stop.
+- `subscription_required`: relay the returned entitlement message. Stop.
 - `insufficient_scope`, or a 401 or auth error: ask the user to
-  re-authenticate the `workouter` server with `/mcp`.
+  re-authenticate the `workouter` server: in Claude Code use `/mcp`; in OpenClaw use `openclaw mcp login workouter`. Approve the required permission; if it is not offered, remove and re-add the connector to refresh its requested scopes.
