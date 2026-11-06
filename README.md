@@ -57,6 +57,10 @@ build me a 12 minute EMOM: 10 burpees
 ## Development
 
 ```
-scripts/validate.sh          # manifest validation + WORKO-224 checks
+scripts/validate.sh          # manifest, MCP wiring, skill and command checks
 /plugin marketplace add ./   # install from a local checkout
 ```
+
+## Support
+
+For help or to report a problem, contact us at https://workouter.co/contact.

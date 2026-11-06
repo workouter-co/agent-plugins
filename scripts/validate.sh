@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Checks the WORKO-224 acceptance criteria (specs/WORKO-224-claude-plugin.md
-# in the Workouter monorepo). Run from anywhere; exits non-zero on failure.
+# Validates the marketplace, the plugin manifest, the MCP server wiring and the
+# skill and command files. Run from anywhere; exits non-zero on failure.
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
