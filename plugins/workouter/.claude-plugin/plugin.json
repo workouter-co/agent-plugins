@@ -1,6 +1,6 @@
 {
   "name": "workouter",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Design structured workouts and send them to your Apple Watch through Workouter.",
   "author": {
     "name": "Workouter",
@@ -9,5 +9,11 @@
   },
   "homepage": "https://workouter.co",
   "repository": "https://github.com/workouter-co/agent-plugins",
-  "keywords": ["workout", "fitness", "apple-watch", "workoutkit", "mcp"]
+  "keywords": [
+    "workout",
+    "fitness",
+    "apple-watch",
+    "workoutkit",
+    "mcp"
+  ]
 }
