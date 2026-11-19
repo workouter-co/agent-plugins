@@ -37,6 +37,13 @@ automatically. To see the inline workout card, turn on OpenClaw's MCP Apps
 host bridge (`openclaw config set mcp.apps.enabled true --strict-json`), then
 restart the gateway.
 
+To install only the workout-building skill, without the plugin, use
+[ClawHub](https://clawhub.ai/workouter-co/skills/workouter):
+
+```
+clawhub install workouter
+```
+
 ## What you get
 
 | | |
