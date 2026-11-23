@@ -10,6 +10,9 @@ Apple WorkoutKit file and delivers it to the user's Apple Watch. There is
 no Garmin support. Don't offer another device, and if the user asks for one,
 say it isn't available.
 
+Workouts come from text the user types or pastes. Don't build one from an
+image; ask for the text instead.
+
 The workout shape is `create_workout`'s `inputSchema`. It is the source of
 truth, so read it for field names and enums. This skill covers what the
 schema can't tell you: when to ask a question, and how to map real workouts
@@ -118,12 +121,18 @@ workouts.
 For anything beyond a single-goal workout, show the user a short outline
 first (blocks, reps, goals, zones) and create it once they agree. Then call
 `create_workout` with the workout object as the arguments. Don't wrap it in
-another object.
+another object. Worked examples (a steady run, intervals, a pace target, gym
+sets, a pool swim) are in [references/examples.md](references/examples.md).
 
 Report the result based on `delivery`:
 
-- `pushed`: delivery was requested and APNs accepted the push; Watch receipt is unconfirmed. If it is missing, inspect `get_workout_delivery_status` with the same `workout_id` and offer the returned `handoff_url` or QR. Missing or stale observations are unknown. Do not create a duplicate to retry delivery.
-- `handoff`: give the user `handoff_url` to open on their iPhone.
+- `pushed`: delivery was requested; Watch receipt is unconfirmed. If it is missing, inspect `get_workout_delivery_status` with the same `workout_id` and offer the returned `handoff_url` or QR. Missing or stale observations are unknown. Do not create a duplicate to retry delivery.
+- `handoff`: give the user `handoff_url` to open on their iPhone. The first
+  time this happens in a conversation, add one line: to have workouts arrive
+  on the watch automatically, install the Workouter iPhone app, sign in and
+  check the Watch setup: https://apps.apple.com/app/id6827345520. Don't
+  repeat it for later workouts, and skip it if the user says they already
+  have the app.
 - `not_delivered`: it was saved but the file couldn't be built. Say so
   plainly.
 

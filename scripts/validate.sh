@@ -11,12 +11,12 @@ check() {
   if "$@" >/dev/null 2>&1; then echo "ok   $name"; else echo "FAIL $name"; fail=1; fi
 }
 
-check "WORKO-224: marketplace validates" claude plugin validate .
-check "WORKO-224: plugin validates" claude plugin validate "$PLUGIN"
+check "marketplace validates" claude plugin validate .
+check "plugin validates" claude plugin validate "$PLUGIN"
 
-# WORKO-227: "auth": "oauth" is for OpenClaw, which only runs OAuth for
-# servers that declare it. Claude Code ignores the key.
-check "WORKO-224/WORKO-227: .mcp.json declares only the production HTTP server, with OAuth" python3 - "$PLUGIN/.mcp.json" <<'PY'
+# "auth": "oauth" is for OpenClaw, which only runs OAuth for servers that
+# declare it. Claude Code ignores the key.
+check ".mcp.json declares only the production HTTP server, with OAuth" python3 - "$PLUGIN/.mcp.json" <<'PY'
 import json, sys
 servers = json.load(open(sys.argv[1]))["mcpServers"]
 assert list(servers) == ["workouter"], servers
@@ -31,14 +31,26 @@ has_frontmatter() { # file, key...
   for key in "$@"; do grep -q "^$key:" <<<"$fm" || return 1; done
 }
 for cmd in create list status; do
-  check "WORKO-224: command $cmd has a description" has_frontmatter "$PLUGIN/commands/$cmd.md" description
+  check "command $cmd has a description" has_frontmatter "$PLUGIN/commands/$cmd.md" description
 done
-check "WORKO-224: build-workout skill has name and description" \
-  has_frontmatter "$PLUGIN/skills/build-workout/SKILL.md" name description
+for skill in build-workout training-plan; do
+  check "$skill skill has name and description" \
+    has_frontmatter "$PLUGIN/skills/$skill/SKILL.md" name description
+done
+
+for f in README.md LICENSE assets/icon.png; do
+  check "plugin folder has $f" test -f "$PLUGIN/$f"
+done
 
 no_garmin_claims() {
   ! grep -rn -i garmin "$PLUGIN/skills" "$PLUGIN/commands" | grep -v -i "no Garmin support"
 }
-check "WORKO-224: Garmin only mentioned as unsupported" no_garmin_claims
+check "Garmin only mentioned as unsupported" no_garmin_claims
+
+# This repository is public. The pattern's brackets keep this line from matching itself.
+no_ticket_refs() {
+  ! grep -rqE 'WORK[O]-[0-9]+' --exclude-dir=.git .
+}
+check "no ticket references in files" no_ticket_refs
 
 exit $fail

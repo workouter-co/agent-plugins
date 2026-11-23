@@ -1,14 +1,18 @@
 {
   "name": "workouter",
-  "version": "0.1.2",
-  "description": "Design structured workouts and send them to your Apple Watch through Workouter.",
+  "displayName": "Workouter",
+  "version": "1.0.0",
+  "description": "Design structured workouts in plain English or from your coach's notes and send them to your Apple Watch with Workouter. Build multi-week training plans too.",
   "author": {
-    "name": "Workouter",
+    "name": "Workouter LLC",
     "email": "developers@workouter.co",
     "url": "https://workouter.co"
   },
   "homepage": "https://workouter.co",
   "repository": "https://github.com/workouter-co/agent-plugins",
+  "privacyPolicyUrl": "https://workouter.co/privacy",
+  "icon": "assets/icon.png",
+  "license": "MIT",
   "keywords": [
     "workout",
     "fitness",
