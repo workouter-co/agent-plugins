@@ -1,6 +1,6 @@
 ---
 name: build-workout
-description: Build a structured workout and send it to the user's Apple Watch with the Workouter MCP tools. Use when the user wants to create, plan, or send a run, ride, swim, walk, hike, row, elliptical, strength, HIIT, EMOM, circuit, or interval workout to their watch, or asks for "a workout" they can follow on their wrist. It works from text only, so for a photo or screenshot of a workout, ask the user to type or paste it.
+description: Build a structured workout and send it to the user's Apple Watch with the Workouter MCP tools. Always use this skill before calling create_workout. Use when the user wants to create, plan, or send a run, ride, swim, walk, hike, row, elliptical, strength, HIIT, EMOM, circuit, or interval workout to their watch, or asks for "a workout" they can follow on their wrist. It works from text only, so for a photo or screenshot of a workout, ask the user to type or paste it.
 ---
 
 # Build a Workouter workout
@@ -20,8 +20,8 @@ onto WorkoutKit's limited primitives.
 
 ## 1. Check before building
 
-Call `get_delivery_status` and `get_quota` first (they are independent, so
-call them together):
+Call `get_delivery_status`, `get_quota` and `list_devices` first (they are
+independent, so call them together):
 
 - If either returns `subscription_required`, stop. Every Workouter tool call
   requires Pro. Relay the message and `upgrade_url`, then stop and wait for
@@ -29,6 +29,10 @@ call them together):
 - If `remaining` is 0, say the weekly limit is reached and stop.
 - If `can_auto_push` is false, tell the user up front that they'll get a
   link to open on their phone instead of an automatic push to the watch.
+- If `list_devices` shows more than one device and none has `is_preferred`
+  set, ask the user which one should receive workouts, naming each by its
+  name. Save their answer with `set_preferred_device`, using that device's
+  `device_id`, and don't create the workout until a preferred device is set.
 
 ## 2. Never make up missing details
 
@@ -138,6 +142,9 @@ Report the result based on `delivery`:
   have the app.
 - `not_delivered`: it was saved but the file couldn't be built. Say so
   plainly.
+- Anything else, or a result saying a device must be chosen: the workout is
+  saved but hasn't been delivered. Say so, ask the user to choose their
+  preferred device as in step 1, and don't create the workout again.
 
 Mention the remaining `quota` when it is available. A `workout_saved` error still identifies an existing workout: inspect that ID rather than creating it again.
 
