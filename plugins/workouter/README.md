@@ -60,7 +60,7 @@ The plugin contains only skills, commands and a remote MCP server, and all of th
 - Workouter has no reps, sets or load for gym sessions. They appear in each timed step's name.
 - Delivery is requested, not confirmed. Workouter reports what it has observed and never claims a workout is on your watch.
 - Saving a workout counts toward your weekly workout limit.
-- Training plans can be saved to Workouter only on accounts where plan tools are available. Otherwise Claude gives you the schedule in the chat.
+- Claude saves a training plan to Workouter when plan tools are available, and otherwise gives you the schedule in the chat. Planned days are sent to your iPhone ahead of their date, so a day with no registered Apple device is skipped once its date passes. A day can only be changed while it is upcoming.
 
 ## Support
 
