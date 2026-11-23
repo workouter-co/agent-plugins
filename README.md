@@ -52,6 +52,7 @@ clawhub install workouter
 | `/workouter:list [limit]` | Your recent workouts |
 | `/workouter:status` | Plan, remaining weekly quota, and whether an Apple Watch is registered |
 | `build-workout` skill | Used automatically when you ask Claude for a workout. It asks when details are missing, handles swim send-offs vs fixed rest, and maps EMOM, AMRAP, and circuits onto WorkoutKit |
+| `training-plan` skill | Builds a multi-week plan from a goal, such as a 10k in 8 weeks, and saves its workouts to Workouter |
 
 Examples:
 
@@ -70,4 +71,4 @@ scripts/validate.sh          # manifest, MCP wiring, skill and command checks
 
 ## Support
 
-For help or to report a problem, contact us at https://workouter.co/contact.
+For help or to report a problem, email support@workouter.co.

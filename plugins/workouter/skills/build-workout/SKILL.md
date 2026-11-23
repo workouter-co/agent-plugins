@@ -1,6 +1,6 @@
 ---
 name: build-workout
-description: Build a structured workout and send it to the user's Apple Watch with the Workouter MCP tools. Use when the user wants to create, plan, or send a run, ride, swim, walk, hike, row, elliptical, strength, HIIT, EMOM, circuit, or interval workout to their watch, or asks for "a workout" they can follow on their wrist.
+description: Build a structured workout and send it to the user's Apple Watch with the Workouter MCP tools. Always use this skill before calling create_workout. Use when the user wants to create, plan, or send a run, ride, swim, walk, hike, row, elliptical, strength, HIIT, EMOM, circuit, or interval workout to their watch, or asks for "a workout" they can follow on their wrist. It works from text only, so for a photo or screenshot of a workout, ask the user to type or paste it.
 ---
 
 # Build a Workouter workout
@@ -10,6 +10,9 @@ Apple WorkoutKit file and delivers it to the user's Apple Watch. There is
 no Garmin support. Don't offer another device, and if the user asks for one,
 say it isn't available.
 
+Workouts come from text the user types or pastes. Don't build one from an
+image; ask for the text instead.
+
 The workout shape is `create_workout`'s `inputSchema`. It is the source of
 truth, so read it for field names and enums. This skill covers what the
 schema can't tell you: when to ask a question, and how to map real workouts
@@ -17,8 +20,8 @@ onto WorkoutKit's limited primitives.
 
 ## 1. Check before building
 
-Call `get_delivery_status` and `get_quota` first (they are independent, so
-call them together):
+Call `get_delivery_status`, `get_quota` and `list_devices` first (they are
+independent, so call them together):
 
 - If either returns `subscription_required`, stop. Every Workouter tool call
   requires Pro. Relay the message and `upgrade_url`, then stop and wait for
@@ -26,6 +29,10 @@ call them together):
 - If `remaining` is 0, say the weekly limit is reached and stop.
 - If `can_auto_push` is false, tell the user up front that they'll get a
   link to open on their phone instead of an automatic push to the watch.
+- If `list_devices` shows more than one device and none has `is_preferred`
+  set, ask the user which one should receive workouts, naming each by its
+  name. Save their answer with `set_preferred_device`, using that device's
+  `device_id`, and don't create the workout until a preferred device is set.
 
 ## 2. Never make up missing details
 
@@ -115,17 +122,29 @@ workouts.
 
 ## 4. Confirm, create, report
 
-For anything beyond a single-goal workout, show the user a short outline
-first (blocks, reps, goals, zones) and create it once they agree. Then call
-`create_workout` with the workout object as the arguments. Don't wrap it in
-another object.
+Always show the user a short outline first (blocks, reps, goals, zones) and
+wait for their yes before calling `create_workout`, even if the request
+already says "send it". Saving counts toward the weekly limit and sends the
+workout to their watch, and nothing here can delete it. Skip the outline
+only for a workout the user has already approved in this conversation, such
+as a batch agreed in a training plan. Then call `create_workout` with the workout object as the arguments. Don't wrap it in
+another object. Worked examples (a steady run, intervals, a pace target, gym
+sets, a pool swim) are in [references/examples.md](references/examples.md).
 
 Report the result based on `delivery`:
 
-- `pushed`: delivery was requested and APNs accepted the push; Watch receipt is unconfirmed. If it is missing, inspect `get_workout_delivery_status` with the same `workout_id` and offer the returned `handoff_url` or QR. Missing or stale observations are unknown. Do not create a duplicate to retry delivery.
-- `handoff`: give the user `handoff_url` to open on their iPhone.
+- `pushed`: delivery was requested; Watch receipt is unconfirmed. If it is missing, inspect `get_workout_delivery_status` with the same `workout_id` and offer the returned `handoff_url` or QR. Missing or stale observations are unknown. Do not create a duplicate to retry delivery.
+- `handoff`: give the user `handoff_url` to open on their iPhone. The first
+  time this happens in a conversation, add one line: to have workouts arrive
+  on the watch automatically, install the Workouter iPhone app, sign in and
+  check the Watch setup: https://apps.apple.com/app/id6827345520. Don't
+  repeat it for later workouts, and skip it if the user says they already
+  have the app.
 - `not_delivered`: it was saved but the file couldn't be built. Say so
   plainly.
+- Anything else, or a result saying a device must be chosen: the workout is
+  saved but hasn't been delivered. Say so, ask the user to choose their
+  preferred device as in step 1, and don't create the workout again.
 
 Mention the remaining `quota` when it is available. A `workout_saved` error still identifies an existing workout: inspect that ID rather than creating it again.
 
