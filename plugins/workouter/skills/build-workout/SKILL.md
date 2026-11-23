@@ -1,6 +1,6 @@
 ---
 name: build-workout
-description: Build a structured workout and send it to the user's Apple Watch with the Workouter MCP tools. Use when the user wants to create, plan, or send a run, ride, swim, walk, hike, row, elliptical, strength, HIIT, EMOM, circuit, or interval workout to their watch, or asks for "a workout" they can follow on their wrist.
+description: Build a structured workout and send it to the user's Apple Watch with the Workouter MCP tools. Use when the user wants to create, plan, or send a run, ride, swim, walk, hike, row, elliptical, strength, HIIT, EMOM, circuit, or interval workout to their watch, or asks for "a workout" they can follow on their wrist. It works from text only, so for a photo or screenshot of a workout, ask the user to type or paste it.
 ---
 
 # Build a Workouter workout
@@ -118,9 +118,12 @@ workouts.
 
 ## 4. Confirm, create, report
 
-For anything beyond a single-goal workout, show the user a short outline
-first (blocks, reps, goals, zones) and create it once they agree. Then call
-`create_workout` with the workout object as the arguments. Don't wrap it in
+Always show the user a short outline first (blocks, reps, goals, zones) and
+wait for their yes before calling `create_workout`, even if the request
+already says "send it". Saving counts toward the weekly limit and sends the
+workout to their watch, and nothing here can delete it. Skip the outline
+only for a workout the user has already approved in this conversation, such
+as a batch agreed in a training plan. Then call `create_workout` with the workout object as the arguments. Don't wrap it in
 another object. Worked examples (a steady run, intervals, a pace target, gym
 sets, a pool swim) are in [references/examples.md](references/examples.md).
 
