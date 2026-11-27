@@ -5,10 +5,11 @@ straight to your Apple Watch through [Workouter](https://workouter.co).
 
 ## Requirements
 
-- A Workouter account on the **Pro** plan (the MCP server is Pro-only).
+- A Workouter **Pro** account. The MCP tools require Pro, and eligible accounts get a
+  one-month free Pro trial when they connect.
 - The Workouter iOS app with an Apple Watch paired, for automatic delivery.
   If you don't have one, Workouter gives you a link to open on your iPhone.
-- There is no Garmin support.
+- Garmin delivery is coming soon.
 
 ## Install
 

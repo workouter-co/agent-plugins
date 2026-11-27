@@ -18,9 +18,9 @@ Worked examples live in `skills/build-workout/references/`.
 
 ## Requirements
 
-- A Workouter account on the Pro plan. See https://workouter.co for current plans.
+- A Workouter Pro account. The MCP tools require Pro, and eligible accounts get a one-month free Pro trial when they connect. See https://workouter.co for current plans.
 - The Workouter iPhone app, signed in, with an Apple Watch paired, for automatic delivery to the watch. Without a registered watch, Workouter gives you a link and QR code to open on your iPhone, and the iPhone app sends the workout over.
-- There is no Garmin support.
+- Garmin delivery is coming soon.
 
 ## Install
 

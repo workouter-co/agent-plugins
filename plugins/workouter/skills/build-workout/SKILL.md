@@ -6,9 +6,9 @@ description: Build a structured workout and send it to the user's Apple Watch wi
 # Build a Workouter workout
 
 The Workouter MCP server (`workouter`) turns a structured workout into an
-Apple WorkoutKit file and delivers it to the user's Apple Watch. There is
-no Garmin support. Don't offer another device, and if the user asks for one,
-say it isn't available.
+Apple WorkoutKit file and delivers it to the user's Apple Watch.
+Garmin delivery is coming soon. Don't offer another device. If the user asks
+for Garmin, say Garmin delivery is coming soon.
 
 Workouts come from text the user types or pastes. Don't build one from an
 image; ask for the text instead.
