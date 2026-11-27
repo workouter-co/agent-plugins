@@ -2,8 +2,7 @@
   "mcpServers": {
     "workouter": {
       "type": "http",
-      "url": "https://workouter.co/api/mcp",
-      "auth": "oauth"
+      "url": "https://workouter.co/api/mcp"
     }
   }
 }
