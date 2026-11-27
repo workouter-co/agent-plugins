@@ -43,9 +43,9 @@ for f in README.md LICENSE assets/icon.png; do
 done
 
 no_garmin_claims() {
-  ! grep -rn -i garmin "$PLUGIN/skills" "$PLUGIN/commands" | grep -v -i "no Garmin support"
+  ! grep -rn -i garmin "$PLUGIN/skills" "$PLUGIN/commands" | grep -v -i "coming soon"
 }
-check "Garmin only mentioned as unsupported" no_garmin_claims
+check "Garmin only mentioned as coming soon" no_garmin_claims
 
 # This repository is public. The pattern's brackets keep this line from matching itself.
 no_ticket_refs() {
