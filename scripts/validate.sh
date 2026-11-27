@@ -14,14 +14,15 @@ check() {
 check "marketplace validates" claude plugin validate .
 check "plugin validates" claude plugin validate "$PLUGIN"
 
-# "auth": "oauth" is for OpenClaw, which only runs OAuth for servers that
-# declare it. Claude Code ignores the key.
-check ".mcp.json declares only the production HTTP server, with OAuth" python3 - "$PLUGIN/.mcp.json" <<'PY'
+# The directory accepts only documented fields for a remote server from an
+# unverified organization, so there is no extra "auth" key. OpenClaw users add
+# the server with --auth oauth themselves (see README.md).
+check ".mcp.json declares only the production HTTP server, with no extra fields" python3 - "$PLUGIN/.mcp.json" <<'PY'
 import json, sys
 servers = json.load(open(sys.argv[1]))["mcpServers"]
 assert list(servers) == ["workouter"], servers
 s = servers["workouter"]
-assert s == {"type": "http", "url": "https://workouter.co/api/mcp", "auth": "oauth"}, s
+assert s == {"type": "http", "url": "https://workouter.co/api/mcp"}, s
 PY
 
 has_frontmatter() { # file, key...
